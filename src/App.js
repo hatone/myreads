@@ -1,7 +1,8 @@
 import React from 'react'
-import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './components/BooksAPI'
 import './App.css'
-import BookShelf from './BookShelf'
+import ListBooks from './components/ListBooks'
+import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
@@ -17,8 +18,12 @@ class BooksApp extends React.Component {
   
   render() {
     return (
-      <div className="app">
-        {this.state.showSearchPage ? (
+      <div className='app'>
+        <Route exact path="/" render={() => (
+        <ListBooks books={this.state.books} />
+        )} />
+        
+        <Route path='/search' render={()=>(
           <div className="search-books">
             <div className="search-books-bar">
               <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
@@ -30,21 +35,7 @@ class BooksApp extends React.Component {
               <ol className="books-grid"></ol>
             </div>
           </div>
-        ) : (
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-              <BookShelf title='Currently Reading' books={this.state.books.filter(book=>book.shelf === 'currentlyReading')} />
-              <BookShelf title='Want to Read' books={this.state.books.filter(book=>book.shelf === 'wantToRead')} />
-              <BookShelf title='Read' books={this.state.books.filter(book=>book.shelf === 'read')} />
-            </div>
-            <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-            </div>
-          </div>
-        )}
+        )}/>
       </div>
     )
   }
