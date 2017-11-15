@@ -6,7 +6,6 @@ const Book = (props) => {
   const { thumbnail } = imageLinks
   
   const bookCoverStyle = {
-    //TODO: これでいいの？
     width: 128,
     height: 193,
     backgroundImage: `url("${thumbnail}")`
@@ -27,7 +26,7 @@ const Book = (props) => {
         </div>
       </div>
       <div className="book-title">{title}</div>
-      <div className="book-authors">{authors.join(', ')}</div>
+      <div className="book-authors">{authors ? authors.join(','):''}</div>
     </div>
   )
 }
