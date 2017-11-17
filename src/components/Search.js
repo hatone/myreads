@@ -6,39 +6,38 @@ import Book from './Book';
 class Search extends Component {
   
   state = {
-    query: '',
+    query: "",
     filteredBooks: []
   }
   
   updateQuery = (query) => {
-    if (!query) {
-      this.setState(
-        {query: '', filteredBooks: []})
-    } else {
-      this.setState({query: query.trim()})
-      BooksAPI.search(query,10).then((books) => {
-        this.setState({filteredBooks: books})
-      })
-    }
+    this.setState({query: query.trim()})
+    BooksAPI.search(query, 20).then((filteredBooks) => {
+      if(filteredBooks.length) {
+        this.setState({filteredBooks})
+      }
+    })
   }
   
   render () {
+    const { filteredBooks } = this.state
     return (
       <div className="search-books">
         <div className="search-books-bar">
           <Link to='/' className="close-search">Close</Link>
           <div className="search-books-input-wrapper">
-            <input type="text" placeholder="Search by title or author" onChange={(e) => this.updateQuery(e.target.value)}/>
+            <input type="text" placeholder="Search by title or author" onChange={(event) => this.updateQuery(event.target.value)}/>
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-          {this.state.filteredBooks.map(book =>
-            <li key={book.id}>
-              <Book book={book} />
-            </li>
-          )} 
-            </ol>
+            {
+              filteredBooks.map(book =>
+                <li key={book.id}>
+                  <Book book={book} updateMoveShelf={this.props.updateMoveShelf}/>
+                </li>
+              )}
+          </ol>
         </div>
       </div>
     )
