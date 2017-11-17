@@ -7,8 +7,7 @@ import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
-    books: [],
-    showSearchPage: false
+    books: []
   }
   
   componentDidMount() {
@@ -17,15 +16,24 @@ class BooksApp extends React.Component {
     )
   }
   
+  updateMoveShelf= (shelf, book) => {
+    BooksAPI.update(book, shelf).then(() => {
+      BooksAPI.getAll().then(books =>
+        this.setState({books})
+      )
+    })
+  }
+  
+  
   render() {
     return (
       <div className='app'>
         <Route exact path="/" render={() => (
-         <ListBooks books={this.state.books} />
+         <ListBooks books={this.state.books} updateMoveShelf={this.updateMoveShelf} />
         )} />
         
         <Route path='/search' render={()=>(
-         <Search books={this.state.books} />  
+         <Search books={this.state.books} updateMoveShelf={this.updateMoveShelf} />  
         )}/>
       </div>
     )

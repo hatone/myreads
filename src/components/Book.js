@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 const Book = (props) => {
-  const { book } = props
+  const { book, updateMoveShelf } = props
   const { imageLinks, title, authors } = book
   const { thumbnail } = imageLinks
   
@@ -16,7 +16,7 @@ const Book = (props) => {
       <div className="book-top">
         <div className="book-cover" style={bookCoverStyle}></div>
         <div className="book-shelf-changer">
-          <select>
+          <select value={book.shelf} onChange={(event) => updateMoveShelf(event.target.value, book)}>
             <option value="none" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
