@@ -6,8 +6,11 @@ import Search from './components/Search'
 import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
-  state = {
-    books: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      books: []
+    };
   }
   
   componentDidMount() {

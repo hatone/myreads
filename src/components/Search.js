@@ -5,10 +5,12 @@ import Book from './Book';
 import { Debounce } from 'react-throttle';
 
 class Search extends Component {
-  
-  state = {
-    query: "",
-    filteredBooks: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: "",
+      filteredBooks: []
+    };
   }
   
   updateQuery = (query) => {
